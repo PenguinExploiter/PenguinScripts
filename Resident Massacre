@@ -1,0 +1,388 @@
+--Resident Massacre, Credits to Penguin.
+
+local ResidentMassacre = Instance.new("ScreenGui")
+local Main = Instance.new("Frame")
+local UICorner = Instance.new("UICorner")
+local Title = Instance.new("Frame")
+local Resident = Instance.new("TextLabel")
+local Massacre = Instance.new("TextLabel")
+local UICorner_2 = Instance.new("UICorner")
+local Drag = Instance.new("TextButton")
+local UICorner_3 = Instance.new("UICorner")
+local TextLabel = Instance.new("TextLabel")
+local Theme = Instance.new("TextButton")
+local UICorner_4 = Instance.new("UICorner")
+local Esp = Instance.new("TextButton")
+local UICorner_5 = Instance.new("UICorner")
+local AutoOxygen = Instance.new("TextButton")
+local UICorner_6 = Instance.new("UICorner")
+local AutoRepair = Instance.new("TextButton")
+local UICorner_7 = Instance.new("UICorner")
+
+--Properties:
+
+ResidentMassacre.Name = "ResidentMassacre"
+ResidentMassacre.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ResidentMassacre.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Main.Name = "Main"
+Main.Parent = ResidentMassacre
+Main.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+Main.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Main.BorderSizePixel = 0
+Main.Position = UDim2.new(0.240154445, 0, 0.117788464, 0)
+Main.Size = UDim2.new(0, 673, 0, 635)
+
+UICorner.CornerRadius = UDim.new(0, 20)
+UICorner.Parent = Main
+
+Title.Name = "Title"
+Title.Parent = Main
+Title.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+Title.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Title.BorderSizePixel = 0
+Title.Size = UDim2.new(0, 673, 0, 153)
+
+Resident.Name = "Resident"
+Resident.Parent = Title
+Resident.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+Resident.BackgroundTransparency = 1.000
+Resident.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Resident.BorderSizePixel = 0
+Resident.Size = UDim2.new(0, 673, 0, 64)
+Resident.Font = Enum.Font.Nunito
+Resident.Text = "Resident"
+Resident.TextColor3 = Color3.fromRGB(255, 204, 0)
+Resident.TextScaled = true
+Resident.TextSize = 14.000
+Resident.TextWrapped = true
+
+Massacre.Name = "Massacre"
+Massacre.Parent = Title
+Massacre.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+Massacre.BackgroundTransparency = 1.000
+Massacre.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Massacre.BorderSizePixel = 0
+Massacre.Position = UDim2.new(0, 0, 0.414512873, 0)
+Massacre.Size = UDim2.new(0, 673, 0, 89)
+Massacre.Font = Enum.Font.Nunito
+Massacre.Text = "Massacre"
+Massacre.TextColor3 = Color3.fromRGB(255, 0, 4)
+Massacre.TextScaled = true
+Massacre.TextSize = 14.000
+Massacre.TextWrapped = true
+
+UICorner_2.CornerRadius = UDim.new(0, 20)
+UICorner_2.Parent = Title
+
+Drag.Name = "Drag"
+Drag.Parent = Main
+Drag.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+Drag.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Drag.BorderSizePixel = 0
+Drag.Position = UDim2.new(0.074294202, 0, 0.264566928, 0)
+Drag.Size = UDim2.new(0, 573, 0, 89)
+Drag.Font = Enum.Font.Nunito
+Drag.Text = "Drag = Smooth"
+Drag.TextColor3 = Color3.fromRGB(255, 255, 255)
+Drag.TextScaled = true
+Drag.TextSize = 14.000
+Drag.TextWrapped = true
+
+UICorner_3.CornerRadius = UDim.new(0, 20)
+UICorner_3.Parent = Drag
+
+TextLabel.Parent = Main
+TextLabel.BackgroundColor3 = Color3.fromRGB(75, 75, 75)
+TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel.BorderSizePixel = 0
+TextLabel.Position = UDim2.new(0.386329859, 0, 0.927559078, 0)
+TextLabel.Size = UDim2.new(0, 153, 0, 46)
+TextLabel.Font = Enum.Font.Nunito
+TextLabel.Text = "Click to Toggle"
+TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.TextScaled = true
+TextLabel.TextSize = 14.000
+TextLabel.TextWrapped = true
+
+Theme.Name = "Theme"
+Theme.Parent = Main
+Theme.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+Theme.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Theme.BorderSizePixel = 0
+Theme.Position = UDim2.new(0.074294202, 0, 0.429921269, 0)
+Theme.Size = UDim2.new(0, 573, 0, 89)
+Theme.Font = Enum.Font.Nunito
+Theme.Text = "Theme = Dark"
+Theme.TextColor3 = Color3.fromRGB(255, 255, 255)
+Theme.TextScaled = true
+Theme.TextSize = 14.000
+Theme.TextWrapped = true
+
+UICorner_4.CornerRadius = UDim.new(0, 20)
+UICorner_4.Parent = Theme
+
+Esp.Name = "Esp"
+Esp.Parent = Main
+Esp.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+Esp.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Esp.BorderSizePixel = 0
+Esp.Position = UDim2.new(0.074294202, 0, 0.596850395, 0)
+Esp.Size = UDim2.new(0, 573, 0, 89)
+Esp.Font = Enum.Font.Nunito
+Esp.Text = "ESP = False"
+Esp.TextColor3 = Color3.fromRGB(255, 255, 255)
+Esp.TextScaled = true
+Esp.TextSize = 14.000
+Esp.TextWrapped = true
+
+UICorner_5.CornerRadius = UDim.new(0, 20)
+UICorner_5.Parent = Esp
+
+AutoOxygen.Name = "AutoOxygen"
+AutoOxygen.Parent = Main
+AutoOxygen.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+AutoOxygen.BorderColor3 = Color3.fromRGB(0, 0, 0)
+AutoOxygen.BorderSizePixel = 0
+AutoOxygen.Position = UDim2.new(0.074294202, 0, 0.757480323, 0)
+AutoOxygen.Size = UDim2.new(0, 573, 0, 40)
+AutoOxygen.Font = Enum.Font.Nunito
+AutoOxygen.Text = "AutoOxygen = False"
+AutoOxygen.TextColor3 = Color3.fromRGB(255, 255, 255)
+AutoOxygen.TextScaled = true
+AutoOxygen.TextSize = 14.000
+AutoOxygen.TextWrapped = true
+
+UICorner_6.CornerRadius = UDim.new(0, 20)
+UICorner_6.Parent = AutoOxygen
+
+AutoRepair.Name = "AutoRepair"
+AutoRepair.Parent = Main
+AutoRepair.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+AutoRepair.BorderColor3 = Color3.fromRGB(0, 0, 0)
+AutoRepair.BorderSizePixel = 0
+AutoRepair.Position = UDim2.new(0.074294202, 0, 0.840944886, 0)
+AutoRepair.Size = UDim2.new(0, 573, 0, 40)
+AutoRepair.Font = Enum.Font.Nunito
+AutoRepair.Text = "AutoRepair = False"
+AutoRepair.TextColor3 = Color3.fromRGB(255, 255, 255)
+AutoRepair.TextScaled = true
+AutoRepair.TextSize = 14.000
+AutoRepair.TextWrapped = true
+
+UICorner_7.CornerRadius = UDim.new(0, 20)
+UICorner_7.Parent = AutoRepair
+
+-- Scripts:
+
+local function YZNLDW_fake_script() -- Main.DragSpeed 
+	local script = Instance.new('LocalScript', Main)
+
+	local UIS = game:GetService('UserInputService')
+	local frame = script.Parent
+	local dragToggle = nil
+	local dragSpeed = 0.25
+	local dragStart = nil
+	local startPos = nil
+	
+	local function updateInput(input)
+		local delta = input.Position - dragStart
+		local position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X,
+			startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+		game:GetService('TweenService'):Create(frame, TweenInfo.new(dragSpeed), {Position = position}):Play()
+	end
+	
+	frame.InputBegan:Connect(function(input)
+		if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) then 
+			dragToggle = true
+			dragStart = input.Position
+			startPos = frame.Position
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragToggle = false
+				end
+			end)
+		end
+	end)
+	
+	UIS.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			if dragToggle then
+				updateInput(input)
+			end
+		end
+	end)
+	
+	while true do
+		task.wait(0.1)
+		if script.Parent.Drag.Text == "Drag = Smooth" then
+			dragSpeed = 0.25
+		elseif script.Parent.Drag.Text == "Drag = Linear" then
+			dragSpeed = 0
+		end
+	end
+end
+coroutine.wrap(YZNLDW_fake_script)()
+local function JWKU_fake_script() -- Main.Main 
+	local script = Instance.new('LocalScript', Main)
+
+	local function PlaySound()
+		local Sound = Instance.new("Sound", script)
+		Sound.Name = "Click"
+		Sound.Volume = 1
+		Sound.SoundId = "rbxassetid://8388724806"
+		Sound:Play()
+	end
+	
+	script.Parent.Drag.Activated:Connect(function()
+		PlaySound()
+		
+		--Drag
+		if script.Parent.Drag.Text == "Drag = Smooth" then
+			script.Parent.Drag.Text = "Drag = Linear"
+		elseif script.Parent.Drag.Text == "Drag = Linear" then
+			script.Parent.Drag.Text = "Drag = Smooth"
+		end
+	end)
+	
+	script.Parent.Theme.Activated:Connect(function()
+		PlaySound()
+	
+		--Theme
+		if script.Parent.Theme.Text == "Theme = Dark" then
+			script.Parent.Theme.Text = "Theme = Light"
+		elseif script.Parent.Theme.Text == "Theme = Light" then
+			script.Parent.Theme.Text = "Theme = Dark"
+		end
+	end)
+	
+	script.Parent.Esp.Activated:Connect(function()
+		PlaySound()
+	
+		--Esp
+		if script.Parent.Esp.Text == "ESP = False" then
+			script.Parent.Esp.Text = "ESP = True"
+		elseif script.Parent.Esp.Text == "ESP = True" then
+			script.Parent.Esp.Text = "ESP = False"
+		end
+	end)
+	
+	script.Parent.AutoOxygen.Activated:Connect(function()
+		PlaySound()
+	
+		--AutoOxygen
+		if script.Parent.AutoOxygen.Text == "AutoOxygen = False" then
+			script.Parent.AutoOxygen.Text = "AutoOxygen = True"
+		elseif script.Parent.AutoOxygen.Text == "AutoOxygen = True" then
+			script.Parent.AutoOxygen.Text = "AutoOxygen = False"
+		end
+	end)
+	
+	script.Parent.AutoRepair.Activated:Connect(function()
+		PlaySound()
+	
+		--AutoRepair
+		if script.Parent.AutoRepair.Text == "AutoRepair = False" then
+			script.Parent.AutoRepair.Text = "AutoRepair = True"
+		elseif script.Parent.AutoRepair.Text == "AutoRepair = True" then
+			script.Parent.AutoRepair.Text = "AutoRepair = False"
+		end
+	end)
+	
+	local MutantHitbox = Instance.new("Part")
+	MutantHitbox.BrickColor = BrickColor.new("Red flip/flop")
+	MutantHitbox.Parent = workspace
+	MutantHitbox.Transparency = 0
+	MutantHitbox.Anchored = true
+	MutantHitbox.CanCollide = false
+	MutantHitbox.Size = Vector3.new(4, 8, 4)
+	
+	while true do
+		task.wait(0.05)
+		
+		--DRAG = script.Parent.DragSpeed
+		
+		--THEME
+		if script.Parent.Theme.Text == "Theme = Dark" then
+			for i,v in pairs(script.Parent:GetChildren()) do
+				if v:IsA("TextButton") then
+					v.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+				end
+			end
+			
+			script.Parent.TextLabel.BackgroundColor3 = Color3.fromRGB(75, 75, 75)
+			script.Parent.Title.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+			script.Parent.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+			
+		elseif script.Parent.Theme.Text == "Theme = Light" then
+			for i,v in pairs(script.Parent:GetChildren()) do
+				if v:IsA("TextButton") then
+					v.BackgroundColor3 = Color3.fromRGB(150, 150, 150)
+				end
+			end
+	
+			script.Parent.TextLabel.BackgroundColor3 = Color3.fromRGB(125, 125, 125)
+			script.Parent.Title.BackgroundColor3 = Color3.fromRGB(150, 150, 150)
+			script.Parent.BackgroundColor3 = Color3.fromRGB(175, 175, 175)
+		end
+		
+		--ESP
+		if script.Parent.Esp.Text == "ESP = True" then
+			if MutantHitbox:FindFirstChild("Indicator") then
+				MutantHitbox.CFrame = workspace.Mutant.Hitbox.CFrame
+			else
+				local Indicator = Instance.new("Highlight")
+				Indicator.Parent = MutantHitbox
+				Indicator.Name = "Indicator"
+				Indicator.FillColor = Color3.fromRGB(255, 0, 0)
+				Indicator.OutlineColor = Color3.fromRGB(255, 0, 0)
+				MutantHitbox.Transparency = 0
+			end
+		elseif script.Parent.Esp.Text == "ESP = False" then
+			if MutantHitbox:FindFirstChild("Indicator") then
+				MutantHitbox:FindFirstChild("Indicator"):Destroy()
+				MutantHitbox.Transparency = 1
+			end
+		end
+		
+		--AutoOxygen
+		if script.Parent.AutoOxygen.Text == "AutoOxygen = True" then
+			local JerryCan = workspace.Shack.JerryCan.ClickDetector
+			fireclickdetector(JerryCan)
+			JerryCan.MaxActivationDistance = 0
+			local Generator = workspace.Shack.Generator.ClickDetector
+			fireclickdetector(Generator)
+			JerryCan.MaxActivationDistance = 8
+		end
+		
+		--AutoRepair
+		if script.Parent.AutoRepair.Text == "AutoRepair = True" then
+			for i,v in pairs(workspace.FuseBox.Wires:GetChildren()) do
+				if v.Sparkles.Enabled == true then
+					if v:FindFirstChild("Indicator") then
+						local ClickDetector = v.ClickDetector
+						fireclickdetector(ClickDetector)
+					else
+						local Indicator = Instance.new("Highlight")
+						Indicator.Parent = v
+						Indicator.Name = "Indicator"
+						Indicator.FillColor = Color3.fromRGB(0, 255, 0)
+						Indicator.OutlineColor = Color3.fromRGB(0, 255, 0)
+					end
+				end
+			end
+			
+		elseif script.Parent.AutoRepair.Text == "AutoRepair = False" then
+			
+			for i,v in pairs(workspace.FuseBox.Wires:GetChildren()) do
+				if v.Sparkles.Enabled == true then
+					if v:FindFirstChild("Indicator") then
+						v.Indicator:Destroy()
+					end
+				end
+			end
+		end
+		
+	end
+end
+coroutine.wrap(JWKU_fake_script)()
