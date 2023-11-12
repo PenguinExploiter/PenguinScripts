@@ -327,7 +327,6 @@ local function IORYQ_fake_script() -- Background.Main
 		--Fruits
 		if game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Main", 9e9):FindFirstChild("ChooseTeam") then
 			game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam", "Pirates")
-			firesignal(Fruit.Touched,game.Players.LocalPlayer.Character.HumanoidRootPart)
 			wait(1)
 		end
 		local plr = game.Players.LocalPlayer
