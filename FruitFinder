@@ -462,6 +462,7 @@ local function IORYQ_fake_script() -- Background.Main
 				end
 
 				Teleport()
+				Subtitle.Text = "Fruit Not Founded"
 			end)
 			wait(2)
 		until game.JobId ~= currentJobId
