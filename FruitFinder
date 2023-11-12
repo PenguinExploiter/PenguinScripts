@@ -43,6 +43,7 @@ UnlockedGui.Parent = Background
 PlayerPicture.Name = "PlayerPicture"
 PlayerPicture.Parent = UnlockedGui
 PlayerPicture.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+PlayerPicture.BackgroundTransparency = 1.000
 PlayerPicture.BorderColor3 = Color3.fromRGB(0, 0, 0)
 PlayerPicture.BorderSizePixel = 0
 PlayerPicture.Position = UDim2.new(0.026890751, 0, 0.248322144, 0)
@@ -253,7 +254,7 @@ local function LHDR_fake_script() -- Background.Client
 		spawn(function()
 			while wait() do
 				local HMS = os.date("%H:%M:%S")
-				Time = HMS
+				Time.Text = HMS
 			end
 		end)
 
@@ -373,7 +374,7 @@ local function LHDR_fake_script() -- Background.Client
 
 				Teleport()
 			end)
-			wait(20)
+			wait(2)
 		until game.JobId ~= currentJobId
 	end)
 end
