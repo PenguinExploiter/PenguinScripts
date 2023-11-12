@@ -1,5 +1,4 @@
---Key:
-local KeyV = "Release"
+local Code = "Release"
 
 -- Instances:
 
@@ -382,11 +381,11 @@ local function EQFXU_fake_script() -- LockedGui.KeySystem
 	local script = Instance.new('LocalScript', LockedGui)
 	
 	GetKey.Activated:Connect(function()
-		setclipboard(tostring(KeyV))
+		setclipboard(tostring(Code))
 	end)
 	
 	CheckKey.Activated:Connect(function()
-		if Key.Text == KeyV then
+		if Key.Text == Code then
 			KeyE = true
 			
 			for i,v in pairs(LockedGui:GetDescendants()) do
