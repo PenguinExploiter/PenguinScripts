@@ -367,6 +367,7 @@ local function IORYQ_fake_script() -- Background.Main
 		for _,v in next, workspace:GetChildren() do
 			if v.Name:find("Fruit") and (v:IsA("Tool") or v:IsA("Model")) then
 				repeat
+					Subtitle.Text = "Fruit Founded"
 					local anc1 = bv:Clone()
 					anc1.Parent = chr.HumanoidRootPart
 					local anc2 = bav:Clone()
