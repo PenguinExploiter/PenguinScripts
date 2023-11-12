@@ -188,153 +188,155 @@ local function UHANC_fake_script() -- Background.Client
 	
 	--Fruits
 	local plr = game.Players.LocalPlayer
-local chr = plr.Character
-local t = game.TweenService
+	local chr = plr.Character
+	local t = game.TweenService
 
-local bv = Instance.new("BodyVelocity")
-bv.MaxForce = Vector3.new(1/0, 1/0, 1/0)
-bv.Velocity = Vector3.new()
-bv.Name = "bV"
-local bav = Instance.new("BodyAngularVelocity")
-bav.AngularVelocity = Vector3.new()
-bav.MaxTorque = Vector3.new(1/0, 1/0, 1/0)
-bav.Name = "bAV" 
+	local bv = Instance.new("BodyVelocity")
+	bv.MaxForce = Vector3.new(1/0, 1/0, 1/0)
+	bv.Velocity = Vector3.new()
+	bv.Name = "bV"
+	local bav = Instance.new("BodyAngularVelocity")
+	bav.AngularVelocity = Vector3.new()
+	bav.MaxTorque = Vector3.new(1/0, 1/0, 1/0)
+	bav.Name = "bAV" 
 
-local Settings = {}
-local HttpService = game:GetService("HttpService")
-local Workspace = game:GetService("Workspace")
+	local Settings = {}
+	local HttpService = game:GetService("HttpService")
+	local Workspace = game:GetService("Workspace")
 
-local SaveFileName = "FruitFinderSonic.json"
+	local SaveFileName = "FruitFinderSonic.json"
 
-local function SaveSettings()
- local HttpService = game:GetService("HttpService")
- writefile(SaveFileName, HttpService:JSONEncode(Settings))
-end
+	local function SaveSettings()
+		local HttpService = game:GetService("HttpService")
+		writefile(SaveFileName, HttpService:JSONEncode(Settings))
+	end
 
-local function ReadSetting()
- local s,e = pcall(function()
-     local HttpService = game:GetService("HttpService")
-     return HttpService:JSONDecode(readfile(SaveFileName))
- end)
- if s then return e
- else
-     SaveSettings()
-     return ReadSetting()
- end
-end
-Settings = ReadSetting()
+	local function ReadSetting()
+		local s,e = pcall(function()
+			local HttpService = game:GetService("HttpService")
+			return HttpService:JSONDecode(readfile(SaveFileName))
+		end)
+		if s then return e
+		else
+			SaveSettings()
+			return ReadSetting()
+		end
+	end
+	Settings = ReadSetting()
 
-local function HopServer()
- local function Hop()
-     for i=1,200 do
-         local serverlist = game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer(i)
-         for k,v in pairs(serverlist) do
-             if k~=game.JobId and v.Count < 11 then
-                 if not Settings[k] or tick() - Settings[k].Time > 60*60  then
-                      Settings[k] = {
-                          Time = tick()
-                      }
-                      SaveSettings()
-                     game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer("teleport",k)
-                     return true
-                 elseif tick() - Settings[k].Time > 60*120 then
-                     Settings[k] = nil
-                 end
-             end
+	local function HopServer()
+		local function Hop()
+			for i=1,200 do
+				local serverlist = game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer(i)
+				for k,v in pairs(serverlist) do
+					if k~=game.JobId and v.Count < 11 then
+						if not Settings[k] or tick() - Settings[k].Time > 60*60  then
+							Settings[k] = {
+								Time = tick()
+							}
+							SaveSettings()
+							game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer("teleport",k)
+							return true
+						elseif tick() - Settings[k].Time > 60*120 then
+							Settings[k] = nil
+						end
+					end
+				end
+			end
+			return false
+		end
+		if not getgenv().Loaded then
+			local function child(childinstance)
+				if childinstance.Name == "ErrorPrompt" then
+					if childinstance.Visible then
+						if childinstance.TitleFrame.ErrorTitle.Text == "Teleport Failed" then
+							HopServer()
+						end
+					end
+					childinstance:GetPropertyChangedSignal("Visible"):Connect(function()
+						if childinstance.Visible then
+							if childinstance.TitleFrame.ErrorTitle.Text == "Teleport Failed" then
+								HopServer()
+							end
+						end
+					end)
+				end
+			end
+			for k,v in pairs(game.CoreGui.RobloxPromptGui.promptOverlay:GetChildren()) do
+				child(v)
+			end
+			game.CoreGui.RobloxPromptGui.promptOverlay.ChildAdded:Connect(child)
+			getgenv().Loaded = true
+		end
+		while not Hop() do wait() end
+		SaveSettings()
+	end
+
+	repeat
+		task.wait()
+	until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("PlayerGui") and game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("Main")
+	wait(0.5)
+	getgenv().Ran = true
+
+	if getgenv().Ran == true then
+		for i,v in pairs(game.Workspace:GetDescendants()) do -- grabs everything from workspace
+			if v.ClassName == 'TouchTransmitter' and v.Parent.Name == 'Handle' then -- checks if it has a handle and if its a touchtransmitter
+				local BillboardGui = Instance.new('BillboardGui') -- Makes Billboardgui
+				local TextLabel = Instance.new('TextLabel') -- makes text label
+
+				BillboardGui.Parent = v.Parent -- what the billboardgui goes into
+				BillboardGui.AlwaysOnTop = true -- if its on top or not
+				BillboardGui.Size = UDim2.new(0, 60, 0, 60) -- size of it
+				BillboardGui.StudsOffset = Vector3.new(0,2,0)
+
+				TextLabel.Parent = BillboardGui -- putting textlabel into billboardgui
+				TextLabel.BackgroundColor3 = Color3.new(1,1,1) -- color
+				TextLabel.BackgroundTransparency = 1 -- transparency
+				TextLabel.Size = UDim2.new(1, 0, 1, 0) -- size
+				TextLabel.Text = v.Parent.Parent.Name -- what the label says
+				TextLabel.TextColor3 = Color3.new(1, 0, 0) -- color
+				TextLabel.TextScaled = true -- if the text is scaled or not
+			end
+		end
+		wait(0.5)
+		if game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Main", 9e9):FindFirstChild("ChooseTeam") then
+			for i,v in pairs({"MouseButton1Click", "MouseButton1Down", "Activated"}) do
+				for i,v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton[v])) do
+					v.Function()
+				end
+				repeat task.wait(0.1) until game.Workspace.Characters:FindFirstChild(game.Players.LocalPlayer.Name)
+
+				while true do
+					local model = game.Workspace:FindFirstChild("Fruit ")
+					if not model or not model:IsA("Model") then
+						HopServer()
+					end
+
+					local tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(
+					(game.Players.LocalPlayer.Character.HumanoidRootPart.Position - model:FindFirstChild("Handle").Position).magnitude / 300,
+					Enum.EasingStyle.Linear
+					)
+					local tween = tweenService:Create(
+						game.Players.LocalPlayer.Character.HumanoidRootPart,
+						tweenInfo,
+						{CFrame = CFrame.new(model:FindFirstChild("Handle").Position)}
+					)
+					tween:Play()
+					tween.Completed:Wait()
+					wait(0.5)
+					local fruit = chr:FindFirstChildOfClass("Tool") and chr:FindFirstChildOfClass("Tool").Name:find("Fruit") and chr:FindFirstChildOfClass("Tool") or (function()
+						for _,fr in plr.Backpack:GetChildren() do
+							if fr.Name:find("Fruit") then
+								return fr
+							end 
+						end
+				end)()
+					game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StoreFruit", fruit:GetAttribute("OriginalName"), fruit)
+					wait(0.5)
+					HopServer()
+            end
          end
-     end
-     return false
- end
- if not getgenv().Loaded then
-     local function child(childinstance)
-         if childinstance.Name == "ErrorPrompt" then
-             if childinstance.Visible then
-                 if childinstance.TitleFrame.ErrorTitle.Text == "Teleport Failed" then
-                     HopServer()
-                 end
-             end
-             childinstance:GetPropertyChangedSignal("Visible"):Connect(function()
-                 if childinstance.Visible then
-                     if childinstance.TitleFrame.ErrorTitle.Text == "Teleport Failed" then
-                         HopServer()
-                     end
-                 end
-             end)
-         end
-     end
-     for k,v in pairs(game.CoreGui.RobloxPromptGui.promptOverlay:GetChildren()) do
-         child(v)
-     end
-     game.CoreGui.RobloxPromptGui.promptOverlay.ChildAdded:Connect(child)
-     getgenv().Loaded = true
- end
- while not Hop() do wait() end
- SaveSettings()
-end
-
-repeat
-   task.wait()
-until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("PlayerGui") and game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("Main")
--
-wait(0.5)
-getgenv().Ran = true
-
-if getgenv().Ran == true then
-    for i,v in pairs(game.Workspace:GetDescendants()) do -- grabs everything from workspace
-    if v.ClassName == 'TouchTransmitter' and v.Parent.Name == 'Handle' then -- checks if it has a handle and if its a touchtransmitter
-        local BillboardGui = Instance.new('BillboardGui') -- Makes Billboardgui
-        local TextLabel = Instance.new('TextLabel') -- makes text label
-        
-        BillboardGui.Parent = v.Parent -- what the billboardgui goes into
-        BillboardGui.AlwaysOnTop = true -- if its on top or not
-        BillboardGui.Size = UDim2.new(0, 60, 0, 60) -- size of it
-        BillboardGui.StudsOffset = Vector3.new(0,2,0)
-        
-        TextLabel.Parent = BillboardGui -- putting textlabel into billboardgui
-        TextLabel.BackgroundColor3 = Color3.new(1,1,1) -- color
-        TextLabel.BackgroundTransparency = 1 -- transparency
-        TextLabel.Size = UDim2.new(1, 0, 1, 0) -- size
-        TextLabel.Text = v.Parent.Parent.Name -- what the label says
-        TextLabel.TextColor3 = Color3.new(1, 0, 0) -- color
-        TextLabel.TextScaled = true -- if the text is scaled or not
-    end
-    end
-    wait(0.5)
-    if game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Main", 9e9):FindFirstChild("ChooseTeam") then
-    for i,v in pairs({"MouseButton1Click", "MouseButton1Down", "Activated"}) do
-    for i,v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton[v])) do
-    v.Function()
-    end
-    repeat task.wait(0.1) until game.Workspace.Characters:FindFirstChild(game.Players.LocalPlayer.Name)
-
-while true do
-   local model = game.Workspace:FindFirstChild("Fruit ")
-   if not model or not model:IsA("Model") then
-   HopServer()
+      end
    end
-   
-   local tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(
-       (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - model:FindFirstChild("Handle").Position).magnitude / 300,
-       Enum.EasingStyle.Linear
-   )
-   local tween = tweenService:Create(
-       game.Players.LocalPlayer.Character.HumanoidRootPart,
-       tweenInfo,
-       {CFrame = CFrame.new(model:FindFirstChild("Handle").Position)}
-   )
-   tween:Play()
-   tween.Completed:Wait()
-     wait(0.5)
-        local fruit = chr:FindFirstChildOfClass("Tool") and chr:FindFirstChildOfClass("Tool").Name:find("Fruit") and chr:FindFirstChildOfClass("Tool") or (function()
-            for _,fr in plr.Backpack:GetChildren() do
-                if fr.Name:find("Fruit") then
-                    return fr
-                 end 
-            end)
-        end)()
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StoreFruit", fruit:GetAttribute("OriginalName"), fruit)
-        wait(0.5)
-        HopServer()
-    end
 end
 coroutine.wrap(UHANC_fake_script)()
