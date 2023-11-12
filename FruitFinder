@@ -390,6 +390,8 @@ local function IORYQ_fake_script() -- Background.Main
 				end)()
 				print(fruit)
 				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StoreFruit", fruit:GetAttribute("OriginalName"), fruit)
+			else
+				Subtitle.Text = "Fruit Not Founded"
 			end
 		end
 		print('nope')
@@ -442,7 +444,6 @@ local function IORYQ_fake_script() -- Background.Main
 								pcall(function()
 									writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
 									wait()
-									Subtitle.Text = "Fruit Not Founded"
 									game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
 								end)
 								wait(4)
