@@ -351,6 +351,8 @@ local function IORYQ_fake_script() -- Background.Main
 
 		repeat wait(1) until game.Workspace.Characters:FindFirstChild(game.Players.LocalPlayer.Name)
 		
+		warn("Test")
+		
 		local plr = game.Players.LocalPlayer
 		local chr = plr.Character
 		local t = game.TweenService
