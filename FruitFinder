@@ -374,7 +374,7 @@ local function LHDR_fake_script() -- Background.Client
 
 				Teleport()
 			end)
-			wait(2)
+			wait(5)
 		until game.JobId ~= currentJobId
 	end)
 end
