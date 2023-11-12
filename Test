@@ -206,179 +206,189 @@ CheckKey.TextScaled = true
 CheckKey.TextSize = 14.000
 CheckKey.TextWrapped = true
 
+local KeyE = false
+
 -- Scripts:
 
 local function LHDR_fake_script() -- Background.Client 
-	local script = Instance.new('LocalScript', Background)
+	spawn(function()
+		repeat wait(1) until KeyE == true
+		
+		local script = Instance.new('LocalScript', Background)
 
-	local function Round(Number)
-		local Decimal = Number - math.floor(Number)
-	
-		if Decimal >= .5 then
-			return math.ceil(Number)
-		else
-			return math.floor(Number)
-		end
-	end
-	
-	--FPS,
-	spawn(function()
-		while wait(.25) do
-			Stats.Text = 
-			 "FPS: " .. Round(workspace:GetRealPhysicsFPS())
-		end
-	end)
-	
-	--Name, PlayerPicture
-	PlayerName.Text = game.Players.LocalPlayer.DisplayName
-	
-	local UserId = game.Players.LocalPlayer.UserId
-	local ThumbnailType = Enum.ThumbnailType.HeadShot
-	local ThumbnailSize = Enum.ThumbnailSize.Size420x420
-	PlayerPicture.Image = game.Players:GetUserThumbnailAsync(
-		UserId, 
-		ThumbnailType, 
-		ThumbnailSize
-	)
-	
-	--CurrentTime
-	spawn(function()
-		while wait() do
-			local HMS = os.date("%H:%M:%S")
-			Time = HMS
-		end
-	end)
-	
-	--Fruits
-	if game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Main", 9e9):FindFirstChild("ChooseTeam") then
-		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam", "Pirates")
-		firesignal(Fruit.Touched,game.Players.LocalPlayer.Character.HumanoidRootPart)
-		wait(1)
-	end
-	local plr = game.Players.LocalPlayer
-	local chr = plr.Character
-	local t = game.TweenService
-	local bv = Instance.new("BodyVelocity")
-	bv.MaxForce = Vector3.new(1/0, 1/0, 1/0)
-	bv.Velocity = Vector3.new()
-	bv.Name = "bV"
-	local bav = Instance.new("BodyAngularVelocity")
-	bav.AngularVelocity = Vector3.new()
-	bav.MaxTorque = Vector3.new(1/0, 1/0, 1/0)
-	bav.Name = "bAV"
-	for _,v in next, workspace:GetChildren() do
-		if v.Name:find("Fruit") and (v:IsA("Tool") or v:IsA("Model")) then
-			repeat
-				local anc1 = bv:Clone()
-				anc1.Parent = chr.HumanoidRootPart
-				local anc2 = bav:Clone()
-				anc2.Parent = chr.HumanoidRootPart
-				local p = t:Create(chr.HumanoidRootPart, TweenInfo.new((plr:DistanceFromCharacter(v.Handle.Position)-100)/320, Enum.EasingStyle.Linear), {CFrame=v.Handle.CFrame + Vector3.new(0, 10, 0)})
-				p:Play()
-				p.Completed:Wait()
-				chr.HumanoidRootPart.CFrame = v.Handle.CFrame
-				anc1:Destroy()
-				anc2:Destroy()
-				wait(1)
-			until v.Parent ~= workspace
-			wait(1)
-			local fruit = chr:FindFirstChildOfClass("Tool") and chr:FindFirstChildOfClass("Tool").Name:find("Fruit") and chr:FindFirstChildOfClass("Tool") or (function()
-				for _,fr in plr.Backpack:GetChildren() do
-					if fr.Name:find("Fruit") then
-						return fr
-					end
-				end
-			end)()
-			print(fruit)
-			game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StoreFruit", fruit:GetAttribute("OriginalName"), fruit)
-		end
-	end
-	
-	local currentJobId = game.JobId
-	repeat
-		task.spawn(pcall, function()
-			local Time = 0.1 -- seconds
-			repeat wait() until game:IsLoaded()
-			wait(Time)
-			local PlaceID = game.PlaceId
-			local AllIDs = {}
-			local foundAnything = ""
-			local actualHour = os.date("!*t").hour
-			local Deleted = false
-			local function TPReturner()
-				local Site;
-				if foundAnything == "" then
-					Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
-				else
-					Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. foundAnything))
-				end
-				local ID = ""
-				if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
-					foundAnything = Site.nextPageCursor
-				end
-				local num = 0;
-				for i,v in pairs(Site.data) do
-					local Possible = true
-					ID = tostring(v.id)
-					if tonumber(v.maxPlayers) > tonumber(v.playing) then
-						for _,Existing in pairs(AllIDs) do
-							if num ~= 0 then
-								if ID == tostring(Existing) then
-									Possible = false
-								end
-							else
-								if tonumber(actualHour) ~= tonumber(Existing) then
-									local delFile = pcall(function()
-										delfile("NotSameServers.json")
-										AllIDs = {}
-										table.insert(AllIDs, actualHour)
-									end)
-								end
-							end
-							num = num + 1
-						end
-						if Possible == true then
-							table.insert(AllIDs, ID)
-							wait()
-							pcall(function()
-								writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
-								wait()
-								game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
-							end)
-							wait(4)
-						end
-					end
-				end
+		local function Round(Number)
+			local Decimal = Number - math.floor(Number)
+
+			if Decimal >= .5 then
+				return math.ceil(Number)
+			else
+				return math.floor(Number)
 			end
-	
-			local function Teleport()
-				while wait() do
-					pcall(function()
-						TPReturner()
-						if foundAnything ~= "" then
-							TPReturner()
-						end
-					end)
-				end
+		end
+
+		--FPS,
+		spawn(function()
+			while wait(.25) do
+				Stats.Text = 
+					"FPS: " .. Round(workspace:GetRealPhysicsFPS())
 			end
-	
-			Teleport()
 		end)
-		wait(2)
-	until game.JobId ~= currentJobId
+
+		--Name, PlayerPicture
+		PlayerName.Text = game.Players.LocalPlayer.DisplayName
+
+		local UserId = game.Players.LocalPlayer.UserId
+		local ThumbnailType = Enum.ThumbnailType.HeadShot
+		local ThumbnailSize = Enum.ThumbnailSize.Size420x420
+		PlayerPicture.Image = game.Players:GetUserThumbnailAsync(
+			UserId, 
+			ThumbnailType, 
+			ThumbnailSize
+		)
+
+		--CurrentTime
+		spawn(function()
+			while wait() do
+				local HMS = os.date("%H:%M:%S")
+				Time = HMS
+			end
+		end)
+
+		--Fruits
+		if game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Main", 9e9):FindFirstChild("ChooseTeam") then
+			game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam", "Pirates")
+			firesignal(Fruit.Touched,game.Players.LocalPlayer.Character.HumanoidRootPart)
+			wait(1)
+		end
+		local plr = game.Players.LocalPlayer
+		local chr = plr.Character
+		local t = game.TweenService
+		local bv = Instance.new("BodyVelocity")
+		bv.MaxForce = Vector3.new(1/0, 1/0, 1/0)
+		bv.Velocity = Vector3.new()
+		bv.Name = "bV"
+		local bav = Instance.new("BodyAngularVelocity")
+		bav.AngularVelocity = Vector3.new()
+		bav.MaxTorque = Vector3.new(1/0, 1/0, 1/0)
+		bav.Name = "bAV"
+		for _,v in next, workspace:GetChildren() do
+			if v.Name:find("Fruit") and (v:IsA("Tool") or v:IsA("Model")) then
+				repeat
+					local anc1 = bv:Clone()
+					anc1.Parent = chr.HumanoidRootPart
+					local anc2 = bav:Clone()
+					anc2.Parent = chr.HumanoidRootPart
+					local p = t:Create(chr.HumanoidRootPart, TweenInfo.new((plr:DistanceFromCharacter(v.Handle.Position)-100)/320, Enum.EasingStyle.Linear), {CFrame=v.Handle.CFrame + Vector3.new(0, 10, 0)})
+					p:Play()
+					p.Completed:Wait()
+					chr.HumanoidRootPart.CFrame = v.Handle.CFrame
+					anc1:Destroy()
+					anc2:Destroy()
+					wait(1)
+				until v.Parent ~= workspace
+				wait(1)
+				local fruit = chr:FindFirstChildOfClass("Tool") and chr:FindFirstChildOfClass("Tool").Name:find("Fruit") and chr:FindFirstChildOfClass("Tool") or (function()
+					for _,fr in plr.Backpack:GetChildren() do
+						if fr.Name:find("Fruit") then
+							return fr
+						end
+					end
+				end)()
+				print(fruit)
+				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StoreFruit", fruit:GetAttribute("OriginalName"), fruit)
+			end
+		end
+
+		local currentJobId = game.JobId
+		repeat
+			task.spawn(pcall, function()
+				local Time = 0.1 -- seconds
+				repeat wait() until game:IsLoaded()
+				wait(Time)
+				local PlaceID = game.PlaceId
+				local AllIDs = {}
+				local foundAnything = ""
+				local actualHour = os.date("!*t").hour
+				local Deleted = false
+
+				local function TPReturner()
+					local Site;
+					if foundAnything == "" then
+						Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
+					else
+						Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. foundAnything))
+					end
+					local ID = ""
+					if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
+						foundAnything = Site.nextPageCursor
+					end
+					local num = 0;
+					for i,v in pairs(Site.data) do
+						local Possible = true
+						ID = tostring(v.id)
+						if tonumber(v.maxPlayers) > tonumber(v.playing) then
+							for _,Existing in pairs(AllIDs) do
+								if num ~= 0 then
+									if ID == tostring(Existing) then
+										Possible = false
+									end
+								else
+									if tonumber(actualHour) ~= tonumber(Existing) then
+										local delFile = pcall(function()
+											delfile("NotSameServers.json")
+											AllIDs = {}
+											table.insert(AllIDs, actualHour)
+										end)
+									end
+								end
+								num = num + 1
+							end
+							if Possible == true then
+								table.insert(AllIDs, ID)
+								wait()
+								pcall(function()
+									writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+									wait()
+									game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
+								end)
+								wait(4)
+							end
+						end
+					end
+				end
+
+				local function Teleport()
+					while wait() do
+						pcall(function()
+							TPReturner()
+							if foundAnything ~= "" then
+								TPReturner()
+							end
+						end)
+					end
+				end
+
+				Teleport()
+			end)
+			wait(20)
+		until game.JobId ~= currentJobId
+	end)
 end
 coroutine.wrap(LHDR_fake_script)()
 local function EQFXU_fake_script() -- LockedGui.KeySystem 
 	local script = Instance.new('LocalScript', LockedGui)
 
 	local Key = loadstring(game:HttpGet("https://raw.githubusercontent.com/PenguinExploiter/PenguinScripts/main/Key"))()
+	local CB = "Corn"
 	
 	GetKey.Activated:Connect(function()
-		setclipboard(tostring(Key))
+		setclipboard(tostring(CB))
 	end)
 	
 	CheckKey.Activated:Connect(function()
 		if Key.Text == Key then
+			KeyE = true
+			
 			for i,v in pairs(LockedGui:GetDescendants()) do
 				if v:IsA("GuiObject") then
 					v.Visible = false
