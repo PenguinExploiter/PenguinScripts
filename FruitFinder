@@ -1,3 +1,6 @@
+--Key:
+local Code = "Release"
+
 -- Instances:
 
 local FruitFinder = Instance.new("ScreenGui")
@@ -379,11 +382,11 @@ local function EQFXU_fake_script() -- LockedGui.KeySystem
 	local script = Instance.new('LocalScript', LockedGui)
 	
 	GetKey.Activated:Connect(function()
-		warn("Release")
+		warn(Code)
 	end)
 	
 	CheckKey.Activated:Connect(function()
-		if Key.Text == "Release" then
+		if Key.Text == Code then
 			KeyE = true
 			
 			for i,v in pairs(LockedGui:GetDescendants()) do
