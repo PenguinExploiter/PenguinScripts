@@ -1,5 +1,7 @@
 --Key:
+
 local Code = "Release"
+local KeyE = false
 
 -- Instances:
 
@@ -210,37 +212,101 @@ CheckKey.TextScaled = true
 CheckKey.TextSize = 14.000
 CheckKey.TextWrapped = true
 
-local KeyE = false
-
 -- Scripts:
 
-local function LHDR_fake_script() -- Background.Client 
+local function HIHMY_fake_script() -- LockedGui.KeySystem 
+	local script = Instance.new('LocalScript', LockedGui)
+
+	GetKey.Activated:Connect(function()
+		setclipboard(Code)
+	end)
+	
+	CheckKey.Activated:Connect(function()
+		if Key.Text == Code then
+			KeyE = true
+	
+			for i,v in pairs(LockedGui:GetDescendants()) do
+				if v:IsA("GuiObject") then
+					v.Visible = false
+				end
+			end
+			for i,v in pairs(UnlockedGui:GetDescendants()) do
+				if v:IsA("GuiObject") then
+					v.Visible = true
+				end
+			end
+		end
+	end)
+end
+coroutine.wrap(HIHMY_fake_script)()
+local function KOULNL_fake_script() -- Background.Drag 
+	local script = Instance.new('LocalScript', Background)
+
+	local UIS = game:GetService('UserInputService')
+	local frame = Background
+	local dragToggle = nil
+	local dragSpeed = 0.25
+	local dragStart = nil
+	local startPos = nil
+	
+	local function updateInput(input)
+		local delta = input.Position - dragStart
+		local position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X,
+			startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+		game:GetService('TweenService'):Create(frame, TweenInfo.new(dragSpeed), {Position = position}):Play()
+	end
+	
+	frame.InputBegan:Connect(function(input)
+		if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) then 
+			dragToggle = true
+			dragStart = input.Position
+			startPos = frame.Position
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragToggle = false
+				end
+			end)
+		end
+	end)
+	
+	UIS.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			if dragToggle then
+				updateInput(input)
+			end
+		end
+	end)
+end
+coroutine.wrap(KOULNL_fake_script)()
+local function IORYQ_fake_script() -- Background.Main 
+	local script = Instance.new('LocalScript', Background)
+
 	spawn(function()
 		repeat wait(1) until KeyE == true
-		
+	
 		local script = Instance.new('LocalScript', Background)
-
+	
 		local function Round(Number)
 			local Decimal = Number - math.floor(Number)
-
+	
 			if Decimal >= .5 then
 				return math.ceil(Number)
 			else
 				return math.floor(Number)
 			end
 		end
-
-		--FPS,
+	
+		--FPS
 		spawn(function()
 			while wait(.25) do
 				Stats.Text = 
 					"FPS: " .. Round(workspace:GetRealPhysicsFPS())
 			end
 		end)
-
+	
 		--Name, PlayerPicture
 		PlayerName.Text = game.Players.LocalPlayer.DisplayName
-
+	
 		local UserId = game.Players.LocalPlayer.UserId
 		local ThumbnailType = Enum.ThumbnailType.HeadShot
 		local ThumbnailSize = Enum.ThumbnailSize.Size420x420
@@ -249,7 +315,7 @@ local function LHDR_fake_script() -- Background.Client
 			ThumbnailType, 
 			ThumbnailSize
 		)
-
+	
 		--CurrentTime
 		spawn(function()
 			while wait() do
@@ -257,7 +323,7 @@ local function LHDR_fake_script() -- Background.Client
 				Time.Text = HMS
 			end
 		end)
-
+	
 		--Fruits
 		if game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Main", 9e9):FindFirstChild("ChooseTeam") then
 			game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam", "Pirates")
@@ -302,11 +368,11 @@ local function LHDR_fake_script() -- Background.Client
 				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StoreFruit", fruit:GetAttribute("OriginalName"), fruit)
 			end
 		end
-
+		print('nope')
 		local currentJobId = game.JobId
 		repeat
 			task.spawn(pcall, function()
-				local Time = 0.1 -- seconds
+				Time = 0.1 -- seconds
 				repeat wait() until game:IsLoaded()
 				wait(Time)
 				local PlaceID = game.PlaceId
@@ -314,8 +380,7 @@ local function LHDR_fake_script() -- Background.Client
 				local foundAnything = ""
 				local actualHour = os.date("!*t").hour
 				local Deleted = false
-
-				local function TPReturner()
+				function TPReturner()
 					local Site;
 					if foundAnything == "" then
 						Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
@@ -362,7 +427,7 @@ local function LHDR_fake_script() -- Background.Client
 				end
 
 				local function Teleport()
-					while wait(5) do
+					while wait() do
 						pcall(function()
 							TPReturner()
 							if foundAnything ~= "" then
@@ -374,72 +439,8 @@ local function LHDR_fake_script() -- Background.Client
 
 				Teleport()
 			end)
-			wait(2)
+			wait(6)
 		until game.JobId ~= currentJobId
 	end)
 end
-coroutine.wrap(LHDR_fake_script)()
-local function EQFXU_fake_script() -- LockedGui.KeySystem 
-	local script = Instance.new('LocalScript', LockedGui)
-	
-	GetKey.Activated:Connect(function()
-		setclipboard(Code)
-	end)
-	
-	CheckKey.Activated:Connect(function()
-		if Key.Text == Code then
-			KeyE = true
-			
-			for i,v in pairs(LockedGui:GetDescendants()) do
-				if v:IsA("GuiObject") then
-					v.Visible = false
-				end
-			end
-			for i,v in pairs(UnlockedGui:GetDescendants()) do
-				if v:IsA("GuiObject") then
-					v.Visible = true
-				end
-			end
-		end
-	end)
-end
-coroutine.wrap(EQFXU_fake_script)()
-local function KHFQ_fake_script() -- Background.DragGui 
-	local script = Instance.new('LocalScript', Background)
-
-	local UIS = game:GetService('UserInputService')
-	local frame = Background
-	local dragToggle = nil
-	local dragSpeed = 0.25
-	local dragStart = nil
-	local startPos = nil
-	
-	local function updateInput(input)
-		local delta = input.Position - dragStart
-		local position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X,
-			startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-		game:GetService('TweenService'):Create(frame, TweenInfo.new(dragSpeed), {Position = position}):Play()
-	end
-	
-	frame.InputBegan:Connect(function(input)
-		if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) then 
-			dragToggle = true
-			dragStart = input.Position
-			startPos = frame.Position
-			input.Changed:Connect(function()
-				if input.UserInputState == Enum.UserInputState.End then
-					dragToggle = false
-				end
-			end)
-		end
-	end)
-	
-	UIS.InputChanged:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-			if dragToggle then
-				updateInput(input)
-			end
-		end
-	end)
-end
-coroutine.wrap(KHFQ_fake_script)()
+coroutine.wrap(IORYQ_fake_script)()
