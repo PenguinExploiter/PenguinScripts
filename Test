@@ -144,12 +144,18 @@ local function UHANC_fake_script() -- Background.Client
 	--FPS, Ping
 	local function GetPing(player)
 		local startTime = tick()
-		player:RequestStreamAroundAsync(Vector3.new(0, 0, 0))
-		local endTime = tick()
-	
-		local ping = (endTime - startTime) * 1000  -- Convert to milliseconds
-	
-		return ping
+		
+		if workspace.StreamingEnabled == true then
+			player:RequestStreamAroundAsync(Vector3.new(0, 0, 0))
+			
+			local endTime = tick()
+
+			local ping = (endTime - startTime) * 1000  -- Convert to milliseconds
+
+			return ping
+		else
+			return 0
+		end
 	end
 	
 	spawn(function()
