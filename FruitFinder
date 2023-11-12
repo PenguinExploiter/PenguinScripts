@@ -320,7 +320,12 @@ local function IORYQ_fake_script() -- Background.Main
 		spawn(function()
 			while wait() do
 				local HMS = os.date("%H:%M:%S")
-				Time.Text = HMS
+				
+				local ZoneTime = tostring(HMS)
+				
+				if ZoneTime then
+					Time.Text = ZoneTime
+				end
 			end
 		end)
 
