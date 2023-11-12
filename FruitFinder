@@ -382,7 +382,7 @@ local function EQFXU_fake_script() -- LockedGui.KeySystem
 	local script = Instance.new('LocalScript', LockedGui)
 	
 	GetKey.Activated:Connect(function()
-		warn(Code)
+		setclipboard(Code)
 	end)
 	
 	CheckKey.Activated:Connect(function()
