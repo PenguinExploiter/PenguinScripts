@@ -460,7 +460,7 @@ local function IORYQ_fake_script() -- Background.Main
 
 				Teleport()
 			end)
-			wait(6)
+			wait(2)
 		until game.JobId ~= currentJobId
 	end)
 end
