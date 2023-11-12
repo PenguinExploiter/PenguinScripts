@@ -327,9 +327,16 @@ local function IORYQ_fake_script() -- Background.Main
 		--Fruits
 		
 		game:GetService("ReplicatedStorage").Remotes["CommF_"]:InvokeServer("SetTeam", "Pirates")
-		game:GetService("Players")["LocalPlayer"].PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton.Size = UDim2.new(0, 10000, 0, 10000)
-		game:GetService("Players")["LocalPlayer"].PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton.Position = UDim2.new(-4, 0, -5, 0)
-		game:GetService("Players")["LocalPlayer"].PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton.BackgroundTransparency = 1
+		
+		spawn(function()
+			repeat wait() until game.Players.LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame:FindFirstChild("TextButton")
+			local textButton = game.Players.LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton
+
+			textButton.Size = UDim2.new(0, 10000, 0, 10000)
+			textButton.Position = UDim2.new(-4, 0, -5, 0)
+			textButton.BackgroundTransparency = 1
+		end)
+		
 		wait(1)
 		game:GetService("VirtualInputManager"):SendMouseButtonEvent(500,500, 0, true, game, 1)
 		game:GetService("VirtualInputManager"):SendMouseButtonEvent(500,500, 0, false, game, 1)
