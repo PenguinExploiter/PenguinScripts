@@ -351,7 +351,7 @@ local function LHDR_fake_script() -- Background.Client
 								wait()
 								pcall(function()
 									writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
-									wait()
+									wait(20)
 									game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
 								end)
 								wait(4)
@@ -373,7 +373,7 @@ local function LHDR_fake_script() -- Background.Client
 
 				Teleport()
 			end)
-			wait(20)
+			wait(2)
 		until game.JobId ~= currentJobId
 	end)
 end
