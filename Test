@@ -378,14 +378,14 @@ coroutine.wrap(LHDR_fake_script)()
 local function EQFXU_fake_script() -- LockedGui.KeySystem 
 	local script = Instance.new('LocalScript', LockedGui)
 
-	local Key = "Corn"
+	local KeyV = "Corn"
 	
 	GetKey.Activated:Connect(function()
-		setclipboard(tostring(Key))
+		setclipboard(tostring(KeyV))
 	end)
 	
 	CheckKey.Activated:Connect(function()
-		if Key.Text == Key then
+		if Key.Text == KeyV then
 			KeyE = true
 			
 			for i,v in pairs(LockedGui:GetDescendants()) do
