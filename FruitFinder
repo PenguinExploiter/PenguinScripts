@@ -401,7 +401,7 @@ local function IORYQ_fake_script() -- Background.Main
 				local foundAnything = ""
 				local actualHour = os.date("!*t").hour
 				local Deleted = false
-				function TPReturner()
+				local function TPReturner()
 					local Site;
 					if foundAnything == "" then
 						Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
