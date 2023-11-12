@@ -378,7 +378,7 @@ coroutine.wrap(LHDR_fake_script)()
 local function EQFXU_fake_script() -- LockedGui.KeySystem 
 	local script = Instance.new('LocalScript', LockedGui)
 
-	local KeyV = "Corn"
+	local KeyV = loadstring(game:HttpGet("https://raw.githubusercontent.com/PenguinExploiter/PenguinScripts/main/Key"))()
 	
 	GetKey.Activated:Connect(function()
 		setclipboard(tostring(KeyV))
