@@ -141,30 +141,13 @@ local function UHANC_fake_script() -- Background.Client
 		end
 	end
 	
-	--FPS, Ping
-	local function GetPing(player)
-		local startTime = tick()
-		
-		if workspace.StreamingEnabled == true then
-			player:RequestStreamAroundAsync(Vector3.new(0, 0, 0))
-			
-			local endTime = tick()
-
-			local ping = (endTime - startTime) * 1000  -- Convert to milliseconds
-
-			return ping
-		else
-			return 0
-		end
+	--FPS,
+spawn(function()
+	while wait(.25) do
+		script.Parent.Stats.Text = 
+		 "FPS: " .. Round(workspace:GetRealPhysicsFPS())
 	end
-	
-	spawn(function()
-		while wait(.25) do
-			Stats.Text = 
-			 "FPS: " .. Round(workspace:GetRealPhysicsFPS()) ..
-			 " Ping: " .. Round(GetPing(game.Players.LocalPlayer)) .. "ms"
-		end
-	end)
+end)
 	
 	--Name, PlayerPicture
 	PlayerName.Text = game.Players.LocalPlayer.DisplayName
