@@ -362,7 +362,7 @@ local function LHDR_fake_script() -- Background.Client
 				end
 
 				local function Teleport()
-					while wait() do
+					while wait(5) do
 						pcall(function()
 							TPReturner()
 							if foundAnything ~= "" then
@@ -374,7 +374,7 @@ local function LHDR_fake_script() -- Background.Client
 
 				Teleport()
 			end)
-			wait(5)
+			wait(2)
 		until game.JobId ~= currentJobId
 	end)
 end
